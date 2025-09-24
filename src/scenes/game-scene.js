@@ -31,6 +31,6 @@ export class GameScene extends Phaser.Scene
             })
             .setOrigin(0.5);
 
-        this.add.image(100, 100, 'ship');
+        this.add.sprite(100, 100, 'ship');
     }
 }
