@@ -1,4 +1,6 @@
 .idea/
+.claude/
+.spec-workflow/
 
 .DS_Store
 project-task.todo
