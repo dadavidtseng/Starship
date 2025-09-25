@@ -5,6 +5,7 @@
 //----------------------------------------------------------------------------------------------------
 import {KeyboardInputComponent} from "../components/input/keyboard-input-component.js";
 import {HorizontalMovementComponent} from "../components/movement/horizontal-movement-component.js";
+import {WeaponComponent} from "../components/weapon/weapon-component.js";
 import * as CONFIG from '../config.js';
 
 //----------------------------------------------------------------------------------------------------
@@ -15,6 +16,7 @@ export class Player extends Phaser.GameObjects.Container
     #shipEngineThrusterSprite;
     #keyboardInputComponent;
     #horizontalMovementComponent;
+    #weaponComponent;
 
     //------------------------------------------------------------------------------------------------
     constructor(scene)
@@ -35,7 +37,15 @@ export class Player extends Phaser.GameObjects.Container
         this.add([this.#shipEngineThrusterSprite, this.#shipEngineSprite, this.#shipSprite]);
 
         this.#keyboardInputComponent = new KeyboardInputComponent(this.scene);
-        this.#horizontalMovementComponent = new HorizontalMovementComponent(this, this.#keyboardInputComponent,CONFIG.PLAYER_MOVEMENT_HORIZONTAL_VELOCITY);
+        this.#horizontalMovementComponent = new HorizontalMovementComponent(this, this.#keyboardInputComponent, CONFIG.PLAYER_MOVEMENT_HORIZONTAL_VELOCITY);
+        this.#weaponComponent = new WeaponComponent(this, this.#keyboardInputComponent, {
+            maxCount: CONFIG.PLAYER_BULLET_MAX_COUNT,
+            yOffset: -20,
+            interval: CONFIG.PLAYER_BULLET_INTERVAL,
+            speed: CONFIG.PLAYER_BULLET_SPEED,
+            lifespan: CONFIG.PLAYER_BULLET_LIFESPAN,
+            flipY: false,
+        })
 
         this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
         this.once(Phaser.GameObjects.Events.DESTROY, () =>
@@ -49,5 +59,6 @@ export class Player extends Phaser.GameObjects.Container
     {
         this.#keyboardInputComponent.update();
         this.#horizontalMovementComponent.update();
+        this.#weaponComponent.update(dt);
     }
 }

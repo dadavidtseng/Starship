@@ -5,6 +5,7 @@
 //----------------------------------------------------------------------------------------------------
 import {BotFighterInputComponent} from "../../components/input/bot-fighter-input-component.js";
 import {VerticalMovementComponent} from "../../components/movement/vertical-movement-component.js";
+import {WeaponComponent} from "../../components/weapon/weapon-component.js";
 import * as CONFIG from '../../config.js';
 
 //----------------------------------------------------------------------------------------------------
@@ -14,6 +15,7 @@ export class FighterEnemy extends Phaser.GameObjects.Container
     #shipEngineSprite;
     #inputComponent;
     #verticalInputComponent;
+    #weaponComponent;
 
     //------------------------------------------------------------------------------------------------
     constructor(scene, x, y)
@@ -31,8 +33,16 @@ export class FighterEnemy extends Phaser.GameObjects.Container
         this.#shipEngineSprite.play('fighter_engine');
         this.add([this.#shipEngineSprite, this.#shipSprite]);
 
-        this.#inputComponent = new BotFighterInputComponent(this.scene);
-        this.#verticalInputComponent = new VerticalMovementComponent(this,this.#inputComponent,CONFIG.ENEMY_FIGHTER_MOVEMENT_VERTICAL_VELOCITY)
+        this.#inputComponent = new BotFighterInputComponent();
+        this.#verticalInputComponent = new VerticalMovementComponent(this, this.#inputComponent, CONFIG.ENEMY_FIGHTER_MOVEMENT_VERTICAL_VELOCITY)
+        this.#weaponComponent = new WeaponComponent(this, this.#inputComponent, {
+            maxCount: CONFIG.ENEMY_FIGHTER_BULLET_MAX_COUNT,
+            yOffset: 10,
+            interval: CONFIG.ENEMY_FIGHTER_BULLET_INTERVAL,
+            speed: CONFIG.ENEMY_FIGHTER_BULLET_SPEED,
+            lifespan: CONFIG.ENEMY_FIGHTER_BULLET_LIFESPAN,
+            flipY: true,
+        });
 
         this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
         this.once(Phaser.GameObjects.Events.DESTROY, () =>
@@ -46,5 +56,6 @@ export class FighterEnemy extends Phaser.GameObjects.Container
     {
         this.#inputComponent.update();
         this.#verticalInputComponent.update();
+        this.#weaponComponent.update(dt);
     }
 }
