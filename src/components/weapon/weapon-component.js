@@ -71,7 +71,7 @@ export class WeaponComponent
             bullet.body.velocity.y -= this.#bulletConfig.speed;
             bullet.setState(this.#bulletConfig.lifespan);
             bullet.setScale(0.8);
-            bullet.body.setSize(14,18);
+            bullet.body.setSize(14, 18);
             bullet.setFlipY(this.#bulletConfig.flipY);
             bullet.play('bullet');
 
@@ -96,5 +96,11 @@ export class WeaponComponent
                 bullet.disableBody(true, true);
             }
         })
+    }
+
+    //------------------------------------------------------------------------------------------------
+    destroyBullet(bullet)
+    {
+        bullet.setState(0);
     }
 }
