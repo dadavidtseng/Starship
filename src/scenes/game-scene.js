@@ -18,12 +18,12 @@ export class GameScene extends Phaser.Scene
     //------------------------------------------------------------------------------------------------
     preload()
     {
-        // this.load.pack('asset_pack', 'assets/data/assets.json');
     }
 
     //------------------------------------------------------------------------------------------------
     create()
     {
         const player = new Player(this);
+
     }
 }
