@@ -1,12 +1,13 @@
-//----------------------------------------------------------------------------------------------------
-// horizontal-movement-component.js
+//---------------------------------------------------------------------------------------------------- 
+// vertical-movement-component.js 
 //----------------------------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------------------------------
 import * as CONFIG from '../../config.js';
+import {COMPONENT_MOVEMENT_VERTICAL_DRAG} from "../../config.js";
 
 //----------------------------------------------------------------------------------------------------
-export class HorizontalMovementComponent
+export class VerticalMovementComponent
 {
     #gameObject;
     #inputComponent;
@@ -20,25 +21,25 @@ export class HorizontalMovementComponent
         this.#velocity = velocity;
 
         this.#gameObject.body.setDamping(true);
-        this.#gameObject.body.setDrag(CONFIG.COMPONENT_MOVEMENT_HORIZONTAL_DRAG);
-        this.#gameObject.body.setMaxVelocityX(CONFIG.COMPONENT_MOVEMENT_HORIZONTAL_MAX_VELOCITY);
+        this.#gameObject.body.setDrag(CONFIG.COMPONENT_MOVEMENT_VERTICAL_DRAG);
+        this.#gameObject.body.setMaxVelocityX(CONFIG.COMPONENT_MOVEMENT_VERTICAL_MAX_VELOCITY);
     }
 
     reset()
     {
-        this.#gameObject.body.velocity.x = 0;
+        this.#gameObject.body.velocity.y = 0;
         this.#gameObject.body.setAngularAcceleration(0);
     }
 
     update()
     {
-        if (this.#inputComponent.leftIsDown)
+        if (this.#inputComponent.downIsDown)
         {
-            this.#gameObject.body.velocity.x -= this.#velocity;
+            this.#gameObject.body.velocity.y += this.#velocity;
         }
-        else if (this.#inputComponent.rightIsDown)
+        else if (this.#inputComponent.upIsDown)
         {
-            this.#gameObject.body.velocity.x += this.#velocity;
+            this.#gameObject.body.velocity.y -= this.#velocity;
         }
         else
         {
