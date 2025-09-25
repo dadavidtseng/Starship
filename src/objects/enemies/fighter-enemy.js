@@ -33,9 +33,9 @@ export class FighterEnemy extends Phaser.GameObjects.Container
         this.#shipEngineSprite.play('fighter_engine');
         this.add([this.#shipEngineSprite, this.#shipSprite]);
 
-        this.#inputComponent = new BotFighterInputComponent();
-        this.#verticalInputComponent = new VerticalMovementComponent(this, this.#inputComponent, CONFIG.ENEMY_FIGHTER_MOVEMENT_VERTICAL_VELOCITY)
-        this.#weaponComponent = new WeaponComponent(this, this.#inputComponent, {
+        this.#inputComponent            = new BotFighterInputComponent();
+        this.#verticalInputComponent    = new VerticalMovementComponent(this, this.#inputComponent, CONFIG.ENEMY_FIGHTER_MOVEMENT_VERTICAL_VELOCITY)
+        this.#weaponComponent           = new WeaponComponent(this, this.#inputComponent, {
             maxCount: CONFIG.ENEMY_FIGHTER_BULLET_MAX_COUNT,
             yOffset: 10,
             interval: CONFIG.ENEMY_FIGHTER_BULLET_INTERVAL,
@@ -49,6 +49,16 @@ export class FighterEnemy extends Phaser.GameObjects.Container
         {
             this.scene.events.off(Phaser.Scenes.Events.UPDATE, this.update, this);
         }, this);
+    }
+
+    get weaponGameObjectGroup()
+    {
+        return this.#weaponComponent.bulletGroup
+    }
+
+    get weaponComponent()
+    {
+        return this.#weaponComponent
     }
 
     //------------------------------------------------------------------------------------------------

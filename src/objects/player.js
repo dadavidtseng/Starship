@@ -9,8 +9,7 @@ import {WeaponComponent} from "../components/weapon/weapon-component.js";
 import * as CONFIG from '../config.js';
 
 //----------------------------------------------------------------------------------------------------
-export class Player extends Phaser.GameObjects.Container
-{
+export class Player extends Phaser.GameObjects.Container {
     #shipSprite;
     #shipEngineSprite;
     #shipEngineThrusterSprite;
@@ -19,8 +18,7 @@ export class Player extends Phaser.GameObjects.Container
     #weaponComponent;
 
     //------------------------------------------------------------------------------------------------
-    constructor(scene)
-    {
+    constructor(scene) {
         super(scene, scene.scale.width * 0.5, scene.scale.height - 32, []);
 
         this.scene.add.existing(this);
@@ -36,9 +34,9 @@ export class Player extends Phaser.GameObjects.Container
         this.#shipEngineThrusterSprite.play('ship_engine_thruster');
         this.add([this.#shipEngineThrusterSprite, this.#shipEngineSprite, this.#shipSprite]);
 
-        this.#keyboardInputComponent = new KeyboardInputComponent(this.scene);
-        this.#horizontalMovementComponent = new HorizontalMovementComponent(this, this.#keyboardInputComponent, CONFIG.PLAYER_MOVEMENT_HORIZONTAL_VELOCITY);
-        this.#weaponComponent = new WeaponComponent(this, this.#keyboardInputComponent, {
+        this.#keyboardInputComponent        = new KeyboardInputComponent(this.scene);
+        this.#horizontalMovementComponent   = new HorizontalMovementComponent(this, this.#keyboardInputComponent, CONFIG.PLAYER_MOVEMENT_HORIZONTAL_VELOCITY);
+        this.#weaponComponent               = new WeaponComponent(this, this.#keyboardInputComponent, {
             maxCount: CONFIG.PLAYER_BULLET_MAX_COUNT,
             yOffset: -20,
             interval: CONFIG.PLAYER_BULLET_INTERVAL,
@@ -48,15 +46,23 @@ export class Player extends Phaser.GameObjects.Container
         })
 
         this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
-        this.once(Phaser.GameObjects.Events.DESTROY, () =>
-        {
+        this.once(Phaser.GameObjects.Events.DESTROY, () => {
             this.scene.events.off(Phaser.Scenes.Events.UPDATE, this.update, this);
         }, this);
     }
 
-    //------------------------------------------------------------------------------------------------
-    update(ts, dt)
+    get weaponGameObjectGroup()
     {
+        return this.#weaponComponent.bulletGroup
+    }
+
+    get weaponComponent()
+    {
+        return this.#weaponComponent
+    }
+
+    //------------------------------------------------------------------------------------------------
+    update(ts, dt) {
         this.#keyboardInputComponent.update();
         this.#horizontalMovementComponent.update();
         this.#weaponComponent.update(dt);
