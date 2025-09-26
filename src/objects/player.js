@@ -8,6 +8,7 @@ import {HorizontalMovementComponent} from "../components/movement/horizontal-mov
 import {WeaponComponent} from "../components/weapon/weapon-component.js";
 import {HealthComponent} from "../components/health/health-component.js";
 import {ColliderComponent} from "../components/collider/collider-component.js";
+import {CUSTOM_EVENTS} from "../components/events/event-bus-component.js";
 import * as CONFIG from '../config.js';
 
 //----------------------------------------------------------------------------------------------------
@@ -21,11 +22,14 @@ export class Player extends Phaser.GameObjects.Container
     #weaponComponent;
     #healthComponent;
     #colliderComponent;
+    #eventBusComponent;
 
     //------------------------------------------------------------------------------------------------
-    constructor(scene)
+    constructor(scene, eventBusComponent)
     {
         super(scene, scene.scale.width * 0.5, scene.scale.height - 32, []);
+
+        this.#eventBusComponent = eventBusComponent;
 
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
@@ -52,6 +56,9 @@ export class Player extends Phaser.GameObjects.Container
         });
         this.#healthComponent = new HealthComponent(CONFIG.PLAYER_HEALTH);
         this.#colliderComponent = new ColliderComponent(this.#healthComponent);
+
+        this.#hide();
+        this.#eventBusComponent.on(CUSTOM_EVENTS.PLAYER_SPAWN, this.#spawn, this);
 
         this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
         this.once(Phaser.GameObjects.Events.DESTROY, () =>
@@ -100,10 +107,12 @@ export class Player extends Phaser.GameObjects.Container
                 key: 'explosion',
             });
 
+            this.#eventBusComponent.emit(CUSTOM_EVENTS.PLAYER_DESTROY);
+
             return;
         }
 
-        this.#shipSprite.setFrame((CONFIG.PLAYER_HEALTH-this.#healthComponent.life).toString(10));
+        this.#shipSprite.setFrame((CONFIG.PLAYER_HEALTH - this.#healthComponent.life).toString(10));
         this.#keyboardInputComponent.update();
         this.#horizontalMovementComponent.update();
         this.#weaponComponent.update(dt);
@@ -117,5 +126,18 @@ export class Player extends Phaser.GameObjects.Container
         this.#shipEngineSprite.setVisible(false);
         this.#shipEngineThrusterSprite.setVisible(false);
         this.#keyboardInputComponent.lockInput = true;
+    }
+
+    //------------------------------------------------------------------------------------------------
+    #spawn()
+    {
+        this.setActive(true);
+        this.setVisible(true);
+        this.#shipEngineSprite.setVisible(true);
+        this.#shipEngineThrusterSprite.setVisible(true);
+        this.#keyboardInputComponent.lockInput = false;
+        this.#shipSprite.setTexture('ship', 0);
+        this.#healthComponent.reset();
+        this.setPosition(this.scene.scale.width * 0.5, this.scene.scale.height - 32);
     }
 }
