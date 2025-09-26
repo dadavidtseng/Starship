@@ -80,7 +80,7 @@ export class ScoutEnemy extends Phaser.GameObjects.Container
         this.#verticalInputComponent = new VerticalMovementComponent(this, this.#inputComponent, CONFIG.ENEMY_SCOUT_MOVEMENT_VERTICAL_VELOCITY)
         this.#horizontalInputComponent = new HorizontalMovementComponent(this, this.#inputComponent, CONFIG.ENEMY_SCOUT_MOVEMENT_HORIZONTAL_VELOCITY)
         this.#healthComponent = new HealthComponent(CONFIG.ENEMY_SCOUT_HEALTH);
-        this.#colliderComponent = new ColliderComponent(this.#healthComponent);
+        this.#colliderComponent = new ColliderComponent(this.#healthComponent, this.#eventBusComponent);
         this.#eventBusComponent.emit(CUSTOM_EVENTS.ENEMY_INIT, this);
         this.#isInitialized = true;
     }

@@ -97,9 +97,9 @@ export class FighterEnemy extends Phaser.GameObjects.Container
             speed: CONFIG.ENEMY_FIGHTER_BULLET_SPEED,
             lifespan: CONFIG.ENEMY_FIGHTER_BULLET_LIFESPAN,
             flipY: true,
-        });
+        }, this.#eventBusComponent);
         this.#healthComponent = new HealthComponent(CONFIG.ENEMY_FIGHTER_HEALTH);
-        this.#colliderComponent = new ColliderComponent(this.#healthComponent);
+        this.#colliderComponent = new ColliderComponent(this.#healthComponent, this.#eventBusComponent);
         this.#eventBusComponent.emit(CUSTOM_EVENTS.ENEMY_INIT, this);
 
         this.#isInitialized = true;
@@ -117,7 +117,7 @@ export class FighterEnemy extends Phaser.GameObjects.Container
     //------------------------------------------------------------------------------------------------
     update(ts, dt)
     {
-        if(!this.#isInitialized)
+        if (!this.#isInitialized)
         {
             return;
         }

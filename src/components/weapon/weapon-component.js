@@ -3,6 +3,9 @@
 //----------------------------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------------------------------
+import {CUSTOM_EVENTS} from "../events/event-bus-component.js";
+
+//----------------------------------------------------------------------------------------------------
 export class WeaponComponent
 {
     #gameObject;
@@ -10,14 +13,16 @@ export class WeaponComponent
     #bulletGroup;
     #bulletConfig;
     #fireBulletInterval;
+    #eventBUsComponent;
 
     //------------------------------------------------------------------------------------------------
-    constructor(gameObject, inputComponent, bulletConfig)
+    constructor(gameObject, inputComponent, bulletConfig, eventBUsComponent)
     {
         this.#gameObject = gameObject;
         this.#inputComponent = inputComponent;
         this.#bulletConfig = bulletConfig;
         this.#fireBulletInterval = 0;
+        this.#eventBUsComponent = eventBUsComponent;
 
         this.#bulletGroup = this.#gameObject.scene.physics.add.group({
             name: 'bullets-${Phaser.Math.RND.uuid()}',
@@ -75,6 +80,7 @@ export class WeaponComponent
             bullet.play('bullet');
 
             this.#fireBulletInterval = this.#bulletConfig.interval;
+            this.#eventBUsComponent.emit(CUSTOM_EVENTS.SHIP_SHOOT);
         }
     }
 
