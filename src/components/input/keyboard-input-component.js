@@ -9,22 +9,23 @@ import {InputComponent} from "./input-component.js";
 export class KeyboardInputComponent extends InputComponent
 {
     #cursorKeys;
-    #inputLocked = false;
+    #inputLocked;
 
     constructor(scene)
     {
         super();
         this.#cursorKeys = scene.input.keyboard.createCursorKeys();
+        this.#inputLocked = false;
     }
 
     set lockInput(val)
     {
-        this.#cursorKeys = val;
+        this.#inputLocked = val;
     }
 
     update()
     {
-        if(this.#inputLocked)
+        if (this.#inputLocked)
         {
             this.reset();
             return;
