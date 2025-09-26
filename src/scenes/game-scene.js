@@ -29,6 +29,10 @@ export class GameScene extends Phaser.Scene
     //------------------------------------------------------------------------------------------------
     create()
     {
+        this.add.sprite(0, 0, 'bg1', 0).setOrigin(0, 1).setAlpha(0.7).setAngle(90).setScale(1, 1.25).play('bg1');
+        this.add.sprite(0, 0, 'bg2', 0).setOrigin(0, 1).setAlpha(0.7).setAngle(90).setScale(1, 1.25).play('bg2');
+        this.add.sprite(0, 0, 'bg3', 0).setOrigin(0, 1).setAlpha(0.7).setAngle(90).setScale(1, 1.25).play('bg3');
+
         const eventBusComponent = new EventBusComponent();
         const player = new Player(this);
         const scoutSpawner = new EnemySpawnerComponent(this, ScoutEnemy,
@@ -101,7 +105,7 @@ export class GameScene extends Phaser.Scene
 
         this.physics.add.overlap(fighterSpawner.phaserGroup, player.weaponGameObjectGroup, (enemyGameObject, projectileGameObject) =>
         {
-            if (!enemyGameObject .active || !projectileGameObject.active)
+            if (!enemyGameObject.active || !projectileGameObject.active)
             {
                 return;
             }
