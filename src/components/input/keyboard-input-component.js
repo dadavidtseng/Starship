@@ -11,6 +11,7 @@ export class KeyboardInputComponent extends InputComponent
     #cursorKeys;
     #inputLocked;
 
+    //------------------------------------------------------------------------------------------------
     constructor(scene)
     {
         super();
@@ -18,11 +19,13 @@ export class KeyboardInputComponent extends InputComponent
         this.#inputLocked = false;
     }
 
+    //------------------------------------------------------------------------------------------------
     set lockInput(val)
     {
         this.#inputLocked = val;
     }
 
+    //------------------------------------------------------------------------------------------------
     update()
     {
         if (this.#inputLocked)
