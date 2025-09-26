@@ -15,6 +15,8 @@ export const ENEMY_SCOUT_MOVEMENT_VERTICAL_VELOCITY = 10;
 export const ENEMY_SCOUT_MOVEMENT_HORIZONTAL_VELOCITY = 9;
 export const ENEMY_SCOUT_MOVEMENT_MAX_X = 80;
 export const ENEMY_SCOUT_HEALTH = 2;
+export const ENEMY_SCOUT_GROUP_SPAWN_INTERVAL = 5000;
+export const ENEMY_SCOUT_GROUP_SPAWN_START = 1000;
 
 //----------------------------------------------------------------------------------------------------
 export const ENEMY_FIGHTER_MOVEMENT_VERTICAL_VELOCITY = 12;
@@ -23,6 +25,8 @@ export const ENEMY_FIGHTER_BULLET_INTERVAL = 2000;
 export const ENEMY_FIGHTER_BULLET_SPEED = -280;
 export const ENEMY_FIGHTER_BULLET_LIFESPAN = 3;
 export const ENEMY_FIGHTER_HEALTH = 2;
+export const ENEMY_FIGHTER_GROUP_SPAWN_INTERVAL = 6000;
+export const ENEMY_FIGHTER_GROUP_SPAWN_START = 3000;
 
 //----------------------------------------------------------------------------------------------------
 export const COMPONENT_MOVEMENT_HORIZONTAL_DRAG = 0.01;
