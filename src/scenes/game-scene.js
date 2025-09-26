@@ -12,6 +12,7 @@ import {EnemyDestroyedComponent} from "../components/spawners/enemy-destroyed-co
 import {CUSTOM_EVENTS, EventBusComponent} from "../components/events/event-bus-component.js";
 import {Score} from "../objects/ui/score.js";
 import {Lives} from "../objects/ui/lives.js";
+import {AudioManager} from "../objects/audio-manager.js";
 import * as CONFIG from "../config.js";
 
 //----------------------------------------------------------------------------------------------------
@@ -118,5 +119,6 @@ export class GameScene extends Phaser.Scene
 
         new Score(this, eventBusComponent);
         new Lives(this, eventBusComponent);
+        new AudioManager(this, eventBusComponent);
     }
 }

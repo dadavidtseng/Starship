@@ -4,7 +4,6 @@
 
 //----------------------------------------------------------------------------------------------------
 import * as CONFIG from '../../config.js';
-import {COMPONENT_MOVEMENT_VERTICAL_DRAG} from "../../config.js";
 
 //----------------------------------------------------------------------------------------------------
 export class VerticalMovementComponent
