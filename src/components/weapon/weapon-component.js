@@ -49,7 +49,6 @@ export class WeaponComponent
     {
         this.#fireBulletInterval -= dt;
 
-
         if (this.#fireBulletInterval > 0)
         {
             return;
