@@ -61,6 +61,18 @@ export class ScoutEnemy extends Phaser.GameObjects.Container
     }
 
     //------------------------------------------------------------------------------------------------
+    get shipAssetKey()
+    {
+        return 'scout';
+    }
+
+    //------------------------------------------------------------------------------------------------
+    get shipDestroyedAnimationKey()
+    {
+        return 'scout_destroy';
+    }
+
+    //------------------------------------------------------------------------------------------------
     init(eventBusComponent)
     {
         this.#eventBusComponent = eventBusComponent;
@@ -87,7 +99,7 @@ export class ScoutEnemy extends Phaser.GameObjects.Container
     //------------------------------------------------------------------------------------------------
     update(ts, dt)
     {
-        if(!this.#isInitialized)
+        if (!this.#isInitialized)
         {
             return;
         }
@@ -101,6 +113,7 @@ export class ScoutEnemy extends Phaser.GameObjects.Container
         {
             this.setActive(false);
             this.setVisible(false);
+            this.#eventBusComponent.emit(CUSTOM_EVENTS.ENEMY_DESTROY, this);
         }
 
         this.#inputComponent.update();

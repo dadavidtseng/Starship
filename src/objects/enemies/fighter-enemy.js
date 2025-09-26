@@ -73,6 +73,18 @@ export class FighterEnemy extends Phaser.GameObjects.Container
     }
 
     //------------------------------------------------------------------------------------------------
+    get shipAssetKey()
+    {
+        return 'fighter';
+    }
+
+    //------------------------------------------------------------------------------------------------
+    get shipDestroyedAnimationKey()
+    {
+        return 'fighter_destroy';
+    }
+
+    //------------------------------------------------------------------------------------------------
     init(eventBusComponent)
     {
         this.#eventBusComponent = eventBusComponent;
@@ -119,6 +131,7 @@ export class FighterEnemy extends Phaser.GameObjects.Container
         {
             this.setActive(false);
             this.setVisible(false);
+            this.#eventBusComponent.emit(CUSTOM_EVENTS.ENEMY_DESTROY, this);
         }
 
         this.#inputComponent.update();
