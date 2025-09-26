@@ -27,6 +27,12 @@ export class BotScoutInputComponent extends InputComponent
     }
 
     //------------------------------------------------------------------------------------------------
+    set startX(val)
+    {
+        this.#startX = val;
+    }
+
+    //------------------------------------------------------------------------------------------------
     update()
     {
         if (this.#gameObject.x > this.#startX + this.#maxXMovement)
